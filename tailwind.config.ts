@@ -9,17 +9,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        navy: "#0A2540",
-        steel: "#1E4D8B",
-        harbor: "#E8F1F8",
-        gold: "#C9A24A",
-        ink: "#122033"
+        navy: "#1e293b",
+        steel: "#d97706",
+        harbor: "#f8fafc",
+        gold: "#f59e0b",
+        ink: "#0f172a"
       },
       boxShadow: {
-        soft: "0 18px 60px rgba(10, 37, 64, 0.12)"
+        soft: "0 18px 60px rgba(15, 23, 42, 0.1)"
       },
       fontFamily: {
-        sans: ["Inter", "Arial", "sans-serif"]
+        sans: ["var(--font-dm-sans)", "Arial", "sans-serif"],
+        heading: ["var(--font-dm-sans)", "Arial", "sans-serif"]
       }
     }
   },

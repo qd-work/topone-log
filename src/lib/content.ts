@@ -72,8 +72,8 @@ export const routeGroups = [
   },
   {
     strength: false,
-    market: {en: "Americas", zh: "美线"},
-    ports: {en: "Major ports across the Americas", zh: "美洲主要港口"},
+    market: {en: "North & Central America", zh: "北美与中美"},
+    ports: {en: "Major ports across North & Central America", zh: "北美与中美主要港口"},
     schedule: routeSchedule
   },
   {
@@ -85,7 +85,7 @@ export const routeGroups = [
 ];
 
 export const trustItems = [
-  {icon: ShieldCheck, label: {en: "NVOCC-licensed", zh: "NVOCC 备案"}},
+  {icon: ShieldCheck, label: {en: "NVOCC-registered", zh: "NVOCC 备案"}},
   {icon: FileCheck2, label: {en: "China-origin specialist", zh: "中国起运港代理"}},
   {icon: Anchor, label: {en: "WCA: Membership in progress", zh: "WCA：会员申请中"}}
 ];

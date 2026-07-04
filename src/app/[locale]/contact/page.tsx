@@ -1,4 +1,5 @@
 import type {Metadata} from "next";
+import {getTranslations} from "next-intl/server";
 import {ContactForm} from "@/components/contact-form";
 import {PageHero} from "@/components/page-hero";
 import {SectionHeading} from "@/components/section-heading";
@@ -9,10 +10,11 @@ import {siteConfig} from "@/lib/site";
 export async function generateMetadata({params}: {params: Promise<{locale: string}>}): Promise<Metadata> {
   const {locale: rawLocale} = await params;
   const locale = routing.locales.includes(rawLocale as Locale) ? (rawLocale as Locale) : routing.defaultLocale;
+  const t = await getTranslations({locale, namespace: "contact"});
   return createPageMetadata({
     locale,
-    title: "Contact TopOne Logistics | Request a Freight Quote",
-    description: "Request a China-origin freight quote from TopOne Logistics with origin, destination, cargo, and timing details.",
+    title: t("metaTitle"),
+    description: t("metaDescription"),
     path: "/contact"
   });
 }
@@ -20,45 +22,52 @@ export async function generateMetadata({params}: {params: Promise<{locale: strin
 export default async function ContactPage({params}: {params: Promise<{locale: string}>}) {
   const {locale: rawLocale} = await params;
   if (!routing.locales.includes(rawLocale as Locale)) return null;
+  const locale = rawLocale as Locale;
+  const t = await getTranslations({locale, namespace: "contact"});
+  const tc = await getTranslations({locale, namespace: "common"});
+
+  const includeItems = ["include1", "include2", "include3", "include4"] as const;
 
   return (
     <>
       <PageHero
-        eyebrow="Contact"
-        title="Request a freight quote"
-        text="Share shipment details for origin-side quote coordination. The current implementation stores inquiries in mock mode until notification credentials are configured."
+        eyebrow={t("heroEyebrow")}
+        title={t("heroTitle")}
+        text={t("heroText")}
         image={siteConfig.images.hero}
+        caption={tc("representative")}
       />
-      <section className="section bg-harbor">
-        <div className="container grid gap-8 lg:grid-cols-[1fr_380px]">
-          <div className="rounded-lg bg-white p-6 shadow-soft">
-            <SectionHeading
-              eyebrow="Inquiry form"
-              title="Tell us what the shipment needs."
-              text="For freight forwarder partners, useful quote requests usually include origin, destination, cargo type, volume, and timing expectations."
-            />
-            <ContactForm source="contact-page" />
-          </div>
-          <aside className="grid content-start gap-5">
-            <div className="rounded-lg bg-navy p-6 text-white shadow-soft">
-              <h2 className="text-2xl font-black">What to include</h2>
-              <ul className="mt-5 grid gap-3 text-sm leading-6 text-white/72">
-                <li>Origin and destination ports or airports</li>
-                <li>Cargo type, container, CBM, KG, or dimensions</li>
-                <li>Expected departure or delivery timing</li>
-                <li>Required scope: trucking, customs, insurance, delivery</li>
-              </ul>
+      <section className="bg-slate-50 py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
+            <div className="rounded-2xl bg-white p-6 shadow-soft">
+              <SectionHeading
+                eyebrow={t("formEyebrow")}
+                title={t("formTitle")}
+                text={t("formText")}
+              />
+              <ContactForm source="contact-page" />
             </div>
-            <div className="rounded-lg border border-slate-200 bg-white p-6">
-              <h2 className="text-2xl font-black text-navy">Contact details</h2>
-              <div className="mt-5 grid gap-3 text-sm leading-7 text-slate-600">
-                <p>Office: Qingdao, China</p>
-                <p>TODO: customer confirms company email</p>
-                <p>TODO: customer confirms WhatsApp / Skype / LinkedIn</p>
-                <p>TODO: customer confirms quote response commitment</p>
+            <aside className="grid content-start gap-5">
+              <div className="rounded-2xl bg-slate-800 p-6 text-white shadow-soft">
+                <h2 className="font-heading text-2xl font-bold">{t("includeTitle")}</h2>
+                <ul className="mt-5 grid gap-3 text-sm leading-6 text-slate-300">
+                  {includeItems.map((key) => (
+                    <li key={key}>{t(key)}</li>
+                  ))}
+                </ul>
               </div>
-            </div>
-          </aside>
+              <div className="rounded-2xl border border-slate-200 bg-white p-6">
+                <h2 className="font-heading text-2xl font-bold text-slate-900">{t("detailsTitle")}</h2>
+                <div className="mt-5 grid gap-3 text-sm leading-7 text-slate-600">
+                  <p>{t("detailsOffice")}</p>
+                  <p>{tc("contactPending")}</p>
+                  <p>{tc("contactPending")}</p>
+                  <p>{t("responsePending")}</p>
+                </div>
+              </div>
+            </aside>
+          </div>
         </div>
       </section>
     </>

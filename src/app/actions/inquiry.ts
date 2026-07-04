@@ -8,15 +8,9 @@ const inquirySchema = z.object({
   name: z.string().min(2),
   company: z.string().optional(),
   email: z.string().email(),
-  country: z.string().min(2),
-  whatsapp: z.string().optional(),
-  originPort: z.string().min(2),
-  destinationPort: z.string().min(2),
-  cargoType: z.string().min(2),
-  volume: z.string().optional(),
-  expectedTransit: z.string().optional(),
-  notes: z.string().optional(),
-  source: z.string().optional()
+  message: z.string().min(10),
+  source: z.string().optional(),
+  locale: z.string().optional()
 });
 
 type InquiryData = z.infer<typeof inquirySchema> & {
@@ -25,7 +19,7 @@ type InquiryData = z.infer<typeof inquirySchema> & {
 
 export type InquiryState = {
   success: boolean;
-  message: string;
+  messageKey?: "validation" | "success" | "error";
 };
 
 export async function submitInquiry(_: InquiryState, formData: FormData): Promise<InquiryState> {
@@ -35,7 +29,7 @@ export async function submitInquiry(_: InquiryState, formData: FormData): Promis
   if (!parsed.success) {
     return {
       success: false,
-      message: "Please complete the required inquiry fields and use a valid email address."
+      messageKey: "validation"
     };
   }
 
@@ -44,12 +38,11 @@ export async function submitInquiry(_: InquiryState, formData: FormData): Promis
     submittedAt: new Date().toISOString()
   };
 
-  // TODO: 客户提供 FEISHU_*/SMTP_* 环境变量后自动接通 3 路
   if (!isRealDeliveryConfigured()) {
     console.log("[inquiry:mock]", inquiry);
     return {
       success: true,
-      message: "Your inquiry has been received. This site is currently in notification mock mode."
+      messageKey: "success"
     };
   }
 
@@ -63,7 +56,7 @@ export async function submitInquiry(_: InquiryState, formData: FormData): Promis
     console.error("[inquiry:feishu:error]", feishuResult.reason);
     return {
       success: false,
-      message: "We could not submit your inquiry. Please try again or email us."
+      messageKey: "error"
     };
   }
 
@@ -76,7 +69,7 @@ export async function submitInquiry(_: InquiryState, formData: FormData): Promis
 
   return {
     success: true,
-    message: "Your inquiry has been received. Our team will review it and reply soon."
+    messageKey: "success"
   };
 }
 
@@ -123,14 +116,7 @@ async function writeToFeishuBitable(inquiry: InquiryData) {
           Name: inquiry.name,
           Company: inquiry.company || "",
           Email: inquiry.email,
-          Country: inquiry.country,
-          WhatsApp: inquiry.whatsapp || "",
-          "Origin port": inquiry.originPort,
-          "Destination port": inquiry.destinationPort,
-          "Cargo type": inquiry.cargoType,
-          "Container or weight": inquiry.volume || "",
-          "Expected transit time": inquiry.expectedTransit || "",
-          Notes: inquiry.notes || "",
+          Notes: inquiry.message,
           Source: inquiry.source || "website",
           Status: "New",
           "Submitted at": inquiry.submittedAt
@@ -199,16 +185,9 @@ function formatInquiryText(inquiry: InquiryData) {
     `Name: ${inquiry.name}`,
     `Company: ${inquiry.company || "Not provided"}`,
     `Email: ${inquiry.email}`,
-    `Country: ${inquiry.country}`,
-    `WhatsApp: ${inquiry.whatsapp || "Not provided"}`,
-    `Origin port: ${inquiry.originPort}`,
-    `Destination port: ${inquiry.destinationPort}`,
-    `Cargo type: ${inquiry.cargoType}`,
-    `Container or weight: ${inquiry.volume || "Not provided"}`,
-    `Expected transit time: ${inquiry.expectedTransit || "Not provided"}`,
     `Source: ${inquiry.source || "website"}`,
     `Submitted at: ${inquiry.submittedAt}`,
     "",
-    `Notes: ${inquiry.notes || "Not provided"}`
+    inquiry.message
   ].join("\n");
 }

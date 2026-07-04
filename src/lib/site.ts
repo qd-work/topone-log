@@ -1,16 +1,18 @@
 import type {Locale} from "@/i18n/routing";
+import {siteImages} from "@/lib/site-images";
 
 export const siteConfig = {
   name: "TopOne Logistics",
   legalName: "Qianhao International Logistics Co., Ltd.",
   chineseName: "青岛千灏国际物流有限公司",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://www.toponelog.com",
-  emailPlaceholder: "TODO: customer confirms company email",
+  emailPlaceholder: "Contact details coming soon",
   office: "Qingdao, China",
   images: {
-    hero: "/images/topone-port-hero.png",
-    warehouse: "/images/topone-warehouse-operations.png",
-    yard: "/images/topone-container-yard.png"
+    hero: siteImages.hero,
+    warehouse: siteImages.warehouse,
+    yard: siteImages.yard,
+    port: siteImages.port
   }
 };
 
