@@ -1,0 +1,30 @@
+{
+  "nav": {
+    "home": "首页",
+    "services": "服务",
+    "routes": "航线",
+    "about": "关于",
+    "contact": "联系",
+    "quote": "获取报价"
+  },
+  "common": {
+    "services": "服务范围",
+    "representative": "代表性图片，真实照片待补"
+  },
+  "form": {
+    "name": "姓名",
+    "company": "公司",
+    "email": "邮箱",
+    "country": "国家/地区",
+    "whatsapp": "WhatsApp",
+    "origin": "起运港",
+    "destination": "目的港",
+    "cargo": "货物类型",
+    "volume": "柜型或重量",
+    "transit": "期望时效",
+    "notes": "备注",
+    "submit": "提交询盘",
+    "success": "您的询盘已收到。团队会审核后通过已确认联系方式回复。",
+    "error": "询盘提交失败。请检查必填项后重试。"
+  }
+}

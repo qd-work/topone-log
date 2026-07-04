@@ -1,0 +1,30 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "routes": "Routes",
+    "about": "About",
+    "contact": "Contact",
+    "quote": "Get a Quote"
+  },
+  "common": {
+    "services": "Our Services",
+    "representative": "Representative image, real photos TBD"
+  },
+  "form": {
+    "name": "Name",
+    "company": "Company",
+    "email": "Email",
+    "country": "Country",
+    "whatsapp": "WhatsApp",
+    "origin": "Origin port",
+    "destination": "Destination port",
+    "cargo": "Cargo type",
+    "volume": "Container or weight",
+    "transit": "Expected transit time",
+    "notes": "Notes",
+    "submit": "Submit inquiry",
+    "success": "Your inquiry has been received. Our team will review it and reply through the confirmed contact channel.",
+    "error": "We could not submit your inquiry. Please check the required fields and try again."
+  }
+}
