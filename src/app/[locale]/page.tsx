@@ -6,6 +6,7 @@ import {HomeServices} from "@/components/home/home-services";
 import {HomeWhy} from "@/components/home/home-why";
 import {HomeWorkflow} from "@/components/home/home-workflow";
 import {routing, type Locale} from "@/i18n/routing";
+import {organizationJsonLd, websiteJsonLd} from "@/lib/json-ld";
 import {createPageMetadata} from "@/lib/metadata";
 
 export async function generateMetadata({params}: {params: Promise<{locale: string}>}): Promise<Metadata> {
@@ -27,6 +28,14 @@ export default async function HomePage({params}: {params: Promise<{locale: strin
 
   return (
     <>
+      {locale === "en" ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify([organizationJsonLd(), websiteJsonLd()])
+          }}
+        />
+      ) : null}
       <HomeHero locale={locale} />
       <HomeServices locale={locale} />
       <HomeRoutes locale={locale} />

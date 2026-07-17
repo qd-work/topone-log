@@ -18,21 +18,22 @@ export function PageHero({
   caption
 }: PageHeroProps) {
   return (
-    <section className="relative overflow-hidden bg-slate-800">
-      <div className="absolute inset-0">
-        <Image src={image} alt={alt} fill priority className="object-cover opacity-40" />
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/70 to-transparent" />
-      </div>
-      <div className="relative mx-auto max-w-7xl px-6 py-24 lg:py-32">
-        <div className="max-w-2xl">
-          <div className="mb-6 inline-block rounded-full border border-amber-500/40 bg-amber-500/20 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-amber-400">
-            {eyebrow}
+    <section data-motion-static className="relative flex min-h-[clamp(520px,68vh,760px)] items-end overflow-hidden bg-[#002a35] text-white">
+      <Image src={image} alt={alt} fill priority sizes="100vw" className="object-cover" />
+      <div className="absolute inset-0 bg-[#002a35]/52" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#002a35] via-[#002a35]/64 to-transparent" />
+      <div className="absolute left-0 top-0 h-full w-2 bg-[#ffda00]" />
+
+      <div className="relative w-full px-[clamp(16px,3vw,48px)] pb-[clamp(48px,7vw,100px)] pt-24">
+        <div className="grid gap-8 lg:grid-cols-[1.5fr_0.5fr] lg:items-end">
+          <div>
+            <p className="mb-7 text-xs font-bold uppercase tracking-[0.22em] text-[#ffda00]">{eyebrow}</p>
+            <h1 className="cargo-display zh-display zh-display-xl max-w-5xl text-[clamp(64px,10vw,160px)]">{title}</h1>
           </div>
-          <h1 className="mb-6 font-heading text-4xl font-bold leading-tight text-white lg:text-5xl xl:text-6xl">{title}</h1>
-          <p className="text-lg leading-relaxed text-slate-300">{text}</p>
-          {caption ? (
-            <p className="caption-over-image mt-10 inline-flex rounded-lg px-3 py-2 text-xs">{caption}</p>
-          ) : null}
+          <div className="border-t border-white/50 pt-5">
+            <p className="max-w-md text-base leading-relaxed text-white/75 lg:text-lg">{text}</p>
+            {caption ? <p className="mt-8 text-xs uppercase tracking-[0.12em] text-white/40">{caption}</p> : null}
+          </div>
         </div>
       </div>
     </section>

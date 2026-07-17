@@ -1,37 +1,27 @@
 import {getTranslations} from "next-intl/server";
 import type {Locale} from "@/i18n/routing";
 
-type HomeWhyProps = {
-  locale: Locale;
-};
+type HomeWhyProps = {locale: Locale};
 
 export async function HomeWhy({locale}: HomeWhyProps) {
   const t = await getTranslations({locale, namespace: "home"});
+  const items = [t("why1"), t("why2"), t("why3"), t("why4")];
 
   return (
-    <section className="bg-slate-800 py-20 lg:py-28">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="grid items-center gap-16 lg:grid-cols-2">
-          <div>
-            <div className="mb-3 text-sm font-semibold uppercase tracking-wider text-amber-400">{t("whyEyebrow")}</div>
-            <h2 className="mb-6 font-heading text-3xl font-bold text-white lg:text-4xl">{t("whyTitle")}</h2>
-            <p className="text-lg leading-relaxed text-slate-300">{t("whyText")}</p>
-          </div>
-          <div className="space-y-4">
-            {[t("why1"), t("why2"), t("why3"), t("why4")].map((item) => (
-              <div
-                key={item}
-                className="flex items-center gap-4 rounded-xl border border-slate-600/50 bg-slate-700/50 p-5"
-              >
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-amber-500/20">
-                  <svg className="h-5 w-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <span className="text-white">{item}</span>
-              </div>
-            ))}
-          </div>
+    <section className="bg-[#4b6298] text-white">
+      <div className="cargo-section grid gap-16 lg:grid-cols-[1.1fr_0.9fr]">
+        <div>
+          <p className="mb-6 text-xs font-bold uppercase tracking-[0.22em] text-white">{t("whyEyebrow")}</p>
+          <h2 className="cargo-display zh-display zh-display-lg text-[clamp(64px,9vw,140px)]">{t("whyTitle")}</h2>
+          <p className="mt-8 max-w-xl text-lg leading-relaxed text-white">{t("whyText")}</p>
+        </div>
+        <div className="self-end border-t border-white/50">
+          {items.map((item, index) => (
+            <div key={item} data-depth data-depth-strength="soft" data-reveal className="group grid grid-cols-[48px_1fr] gap-4 border-b border-white/50 py-6 transition-colors hover:bg-[#ffda00] hover:px-5 hover:text-[#002a35]">
+              <span className="cargo-display text-3xl text-[#ffda00] group-hover:text-[#002a35]">0{index + 1}</span>
+              <p className="font-medium leading-relaxed">{item}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

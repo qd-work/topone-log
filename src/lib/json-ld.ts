@@ -1,13 +1,23 @@
-import {siteConfig} from "@/lib/site";
+import type {Locale} from "@/i18n/routing";
+import {localizedPath, siteConfig} from "@/lib/site";
 
 export function organizationJsonLd() {
+  const organizationId = new URL("/#organization", siteConfig.siteUrl).toString();
+
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": organizationId,
     name: siteConfig.name,
     legalName: siteConfig.legalName,
     alternateName: siteConfig.chineseName,
     url: siteConfig.siteUrl,
+    logo: {
+      "@type": "ImageObject",
+      url: new URL(siteConfig.images.logo, siteConfig.siteUrl).toString(),
+      width: 512,
+      height: 512
+    },
     email: siteConfig.email,
     telephone: siteConfig.phoneHref.replace("tel:", ""),
     address: {
@@ -29,8 +39,12 @@ export function websiteJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": new URL("/#website", siteConfig.siteUrl).toString(),
     name: siteConfig.name,
-    url: siteConfig.siteUrl
+    alternateName: "TopOne",
+    url: siteConfig.siteUrl,
+    publisher: {"@id": new URL("/#organization", siteConfig.siteUrl).toString()},
+    inLanguage: ["en", "zh-CN"]
   };
 }
 
@@ -38,18 +52,24 @@ export function serviceJsonLd(service: {
   title: string;
   description: string;
   slug: string;
-}) {
+}, locale: Locale) {
+  const url = new URL(localizedPath(locale, `/services/${service.slug}`), siteConfig.siteUrl).toString();
+
   return {
     "@context": "https://schema.org",
     "@type": "Service",
+    "@id": `${url}#service`,
     name: service.title,
     description: service.description,
+    url,
+    serviceType: service.title,
     provider: {
-      "@type": "Organization",
-      name: siteConfig.name,
-      url: siteConfig.siteUrl
+      "@id": new URL("/#organization", siteConfig.siteUrl).toString()
     },
-    areaServed: "China-origin international freight forwarding"
+    areaServed: {
+      "@type": "Place",
+      name: "China-origin international routes"
+    }
   };
 }
 

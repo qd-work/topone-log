@@ -20,7 +20,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-dm-sans)", "Arial", "sans-serif"],
-        heading: ["var(--font-dm-sans)", "Arial", "sans-serif"]
+        heading: ["var(--font-barlow-condensed)", "Impact", "Arial Narrow", "sans-serif"]
       }
     }
   },

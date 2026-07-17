@@ -2,6 +2,7 @@
 .velite
 node_modules
 out
+output
 .env
 .env*.local
 !.env.example

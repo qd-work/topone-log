@@ -16,9 +16,12 @@ export function createPageMetadata({
   description
 }: MetadataInput): Metadata {
   const url = new URL(localizedPath(locale, path), siteConfig.siteUrl);
+  const socialImage = new URL(siteConfig.images.social, siteConfig.siteUrl);
+  const googleVerification = process.env.GOOGLE_SITE_VERIFICATION;
 
   return {
     metadataBase: new URL(siteConfig.siteUrl),
+    applicationName: siteConfig.name,
     title,
     description,
     alternates: {
@@ -34,9 +37,35 @@ export function createPageMetadata({
       description,
       url,
       siteName: siteConfig.name,
-      images: [{url: siteConfig.images.hero, width: 1200, height: 630}],
-      locale,
+      images: [
+        {
+          url: socialImage,
+          width: 1718,
+          height: 916,
+          alt: "Container port operations for TopOne Logistic"
+        }
+      ],
+      locale: locale === "zh" ? "zh_CN" : "en_US",
+      alternateLocale: locale === "zh" ? "en_US" : "zh_CN",
       type: "website"
-    }
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [socialImage]
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1
+      }
+    },
+    verification: googleVerification ? {google: googleVerification} : undefined
   };
 }

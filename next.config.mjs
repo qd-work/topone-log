@@ -4,6 +4,10 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  poweredByHeader: false,
+  // Keep SEO and social metadata in <head> for every crawler and audit tool.
+  // All metadata is local, so the blocking cost is negligible for this small site.
+  htmlLimitedBots: /.*/,
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
@@ -17,14 +21,17 @@ const nextConfig = {
       }
     ]
   },
-  async rewrites() {
+  async headers() {
     return [
-      {source: "/", destination: "/en"},
-      {source: "/services", destination: "/en/services"},
-      {source: "/services/:slug", destination: "/en/services/:slug"},
-      {source: "/routes", destination: "/en/routes"},
-      {source: "/about", destination: "/en/about"},
-      {source: "/contact", destination: "/en/contact"}
+      {
+        source: "/videos/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable"
+          }
+        ]
+      }
     ];
   }
 };

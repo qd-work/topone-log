@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 64 64" role="img" aria-label="TopOne Logistic">
+  <rect width="64" height="64" fill="#6682c2"/>
+  <path fill="#fff" d="M9 12h46v10H38v32H26V22H9z"/>
+  <rect x="38" y="34" width="17" height="20" fill="#ffda00"/>
+</svg>

@@ -87,7 +87,7 @@ export const routeGroups = [
 export const trustItems = [
   {icon: ShieldCheck, label: {en: "NVOCC-registered", zh: "NVOCC 备案"}},
   {icon: FileCheck2, label: {en: "China-origin specialist", zh: "中国起运港代理"}},
-  {icon: Anchor, label: {en: "WCA: Membership in progress", zh: "WCA：会员申请中"}}
+  {icon: Anchor, label: {en: "18 years of freight experience", zh: "18 年货代行业经验"}}
 ];
 
 export function t<T extends Record<Locale, string>>(value: T, locale: Locale) {

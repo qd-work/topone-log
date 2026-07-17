@@ -2,7 +2,7 @@ import type {Locale} from "@/i18n/routing";
 import {siteImages} from "@/lib/site-images";
 
 export const siteConfig = {
-  name: "TopOne Logistics",
+  name: "TopOne Logistic",
   legalName: "QINGDAO QIANHAO INTERNATIONAL LOGISTICS CO.,LTD",
   chineseName: "青岛千灏国际物流有限公司",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://www.toponelog.com",
@@ -12,6 +12,8 @@ export const siteConfig = {
   phoneHref: "tel:+8613705326028",
   office: "Qingdao, China",
   images: {
+    logo: "/icon.svg",
+    social: "/images/topone-port-hero.png",
     hero: siteImages.hero,
     warehouse: siteImages.warehouse,
     yard: siteImages.yard,

@@ -37,10 +37,10 @@ export default async function ContactPage({params}: {params: Promise<{locale: st
         image={siteConfig.images.hero}
         caption={tc("representative")}
       />
-      <section className="bg-slate-50 py-20 lg:py-28">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
-            <div className="rounded-2xl bg-white p-6 shadow-soft">
+      <section className="bg-[#f1efe8]">
+        <div className="cargo-section">
+          <div className="grid gap-0 border border-[#002a35] lg:grid-cols-[1fr_380px]">
+            <div data-depth data-depth-strength="soft" data-reveal className="p-6 lg:p-10">
               <SectionHeading
                 eyebrow={t("formEyebrow")}
                 title={t("formTitle")}
@@ -48,28 +48,28 @@ export default async function ContactPage({params}: {params: Promise<{locale: st
               />
               <ContactForm source="contact-page" />
             </div>
-            <aside className="grid content-start gap-5">
-              <div className="rounded-2xl bg-slate-800 p-6 text-white shadow-soft">
-                <h2 className="font-heading text-2xl font-bold">{t("includeTitle")}</h2>
-                <ul className="mt-5 grid gap-3 text-sm leading-6 text-slate-300">
+            <aside data-depth data-depth-strength="soft" data-reveal className="grid content-start border-t border-[#002a35] lg:border-l lg:border-t-0">
+              <div className="bg-[#002a35] p-7 text-white">
+                <h2 className="cargo-display zh-display zh-display-sm text-4xl text-[#ffda00]">{t("includeTitle")}</h2>
+                <ul className="mt-7 grid text-sm leading-6 text-white/70">
                   {includeItems.map((key) => (
-                    <li key={key}>{t(key)}</li>
+                    <li key={key} className="border-t border-white/20 py-3">{t(key)}</li>
                   ))}
                 </ul>
               </div>
-              <div className="rounded-2xl border border-slate-200 bg-white p-6">
-                <h2 className="font-heading text-2xl font-bold text-slate-900">{t("detailsTitle")}</h2>
-                <div className="mt-5 grid gap-3 text-sm leading-7 text-slate-600">
+              <div className="bg-[#ffda00] p-7 text-[#002a35]">
+                <h2 className="cargo-display zh-display zh-display-sm text-4xl">{t("detailsTitle")}</h2>
+                <div className="mt-6 grid gap-3 text-sm leading-7 text-[#002a35]/75">
                   <p>{t("detailsOffice")}</p>
                   <p>
                     {t("detailsEmail")}:{" "}
-                    <a className="font-medium text-amber-700 hover:underline" href={`mailto:${siteConfig.email}`}>
+                    <a className="font-bold underline" href={`mailto:${siteConfig.email}`}>
                       {siteConfig.email}
                     </a>
                   </p>
                   <p>
                     {t("detailsPhone")}:{" "}
-                    <a className="font-medium text-amber-700 hover:underline" href={siteConfig.phoneHref}>
+                    <a className="font-bold underline" href={siteConfig.phoneHref}>
                       {siteConfig.phoneDisplay}
                     </a>
                   </p>

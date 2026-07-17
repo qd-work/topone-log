@@ -8,25 +8,25 @@ type SectionHeadingProps = {
 
 export function SectionHeading({eyebrow, title, text, light, centered}: SectionHeadingProps) {
   return (
-    <div className={`mb-10 max-w-3xl ${centered ? "mx-auto text-center" : ""}`}>
+    <div className={`mb-12 max-w-4xl ${centered ? "mx-auto text-center" : ""}`}>
       {eyebrow ? (
         <p
-          className={`mb-3 text-sm font-semibold uppercase tracking-wider ${
-            light ? "text-amber-400" : "text-amber-600"
+          className={`mb-5 text-xs font-bold uppercase tracking-[0.2em] ${
+            light ? "text-[#ffda00]" : "text-[#4b6298]"
           }`}
         >
           {eyebrow}
         </p>
       ) : null}
       <h2
-        className={`font-heading text-3xl font-bold leading-tight lg:text-4xl ${
-          light ? "text-white" : "text-slate-900"
+        className={`cargo-display zh-display zh-display-lg text-[clamp(48px,7vw,104px)] ${
+          light ? "text-white" : "text-[#002a35]"
         }`}
       >
         {title}
       </h2>
       {text ? (
-        <p className={`mt-4 text-base leading-relaxed lg:text-lg ${light ? "text-slate-300" : "text-slate-600"}`}>
+        <p className={`mt-6 max-w-2xl text-base leading-relaxed lg:text-lg ${light ? "text-white/70" : "text-[#002a35]/65"}`}>
           {text}
         </p>
       ) : null}

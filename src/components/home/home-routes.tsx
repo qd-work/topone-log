@@ -4,9 +4,7 @@ import type {Locale} from "@/i18n/routing";
 import {routeGroups, t} from "@/lib/content";
 import {siteImages} from "@/lib/site-images";
 
-type HomeRoutesProps = {
-  locale: Locale;
-};
+type HomeRoutesProps = {locale: Locale};
 
 const routeVisuals = [
   {image: siteImages.routes.africa, alt: "Container ship on international trade lane", marketIndex: 0},
@@ -19,42 +17,32 @@ export async function HomeRoutes({locale}: HomeRoutesProps) {
   const tc = await getTranslations({locale, namespace: "common"});
 
   return (
-    <section className="bg-slate-50 py-20 lg:py-28">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="mb-16 text-center">
-          <div className="mb-3 text-sm font-semibold uppercase tracking-wider text-amber-600">{th("routesEyebrow")}</div>
-          <h2 className="font-heading text-3xl font-bold text-slate-900 lg:text-4xl">{th("routesTitle")}</h2>
+    <section className="bg-[#ffda00] text-[#002a35]">
+      <div className="cargo-section">
+        <div className="mb-12 grid gap-5 lg:grid-cols-[0.7fr_1.3fr] lg:items-end">
+          <p className="text-xs font-bold uppercase tracking-[0.22em]">{th("routesEyebrow")}</p>
+          <h2 className="cargo-display zh-display zh-display-lg text-[clamp(56px,8vw,124px)]">{th("routesTitle")}</h2>
         </div>
-        <div className="grid gap-6 lg:grid-cols-4">
-          {routeVisuals.map((visual) => {
+        <div className="grid border-l border-t border-[#002a35] lg:grid-cols-4">
+          {routeVisuals.map((visual, index) => {
             const route = routeGroups[visual.marketIndex];
             return (
-              <div
-                key={visual.alt}
-                className="group relative aspect-square overflow-hidden rounded-2xl lg:aspect-auto lg:h-80"
-              >
-                <Image
-                  src={visual.image}
-                  alt={visual.alt}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-transparent" />
-                <div className="absolute bottom-6 left-6">
-                  <h3 className="font-heading text-2xl font-bold text-white">{t(route.market, locale)}</h3>
+              <article key={visual.alt} data-depth data-reveal className="group border-b border-r border-[#002a35] bg-[#002a35] text-white">
+                <div className="relative h-72 overflow-hidden lg:h-[420px]">
+                  <Image src={visual.image} alt={visual.alt} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover opacity-80 transition duration-700 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#002a35] via-transparent to-transparent" />
+                  <span className="absolute left-5 top-5 text-xs font-bold tracking-[0.2em] text-[#ffda00]">0{index + 1}</span>
+                  <h3 className="cargo-display zh-display zh-display-md absolute bottom-5 left-5 right-5 text-5xl">{t(route.market, locale)}</h3>
                 </div>
-              </div>
+              </article>
             );
           })}
-          <div className="flex flex-col justify-center rounded-2xl bg-white p-6">
-            <div className="mb-4 text-sm font-medium text-slate-500">{tc("alsoCovering")}</div>
-            <div className="space-y-3">
+          <div data-depth data-depth-strength="soft" data-reveal className="flex min-h-72 flex-col justify-between border-b border-r border-[#002a35] p-6 lg:min-h-[420px] lg:p-8">
+            <p className="text-xs font-bold uppercase tracking-[0.2em]">{tc("alsoCovering")}</p>
+            <div>
               {routeGroups.slice(3).map((route) => (
-                <div key={t(route.market, locale)} className="flex items-center gap-3 rounded-xl bg-slate-50 p-3">
-                  <svg className="h-5 w-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                  <span className="font-medium text-slate-700">{t(route.market, locale)}</span>
+                <div key={t(route.market, locale)} className="border-t border-[#002a35] py-4 font-bold uppercase tracking-[-0.02em]">
+                  {t(route.market, locale)}
                 </div>
               ))}
             </div>

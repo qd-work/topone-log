@@ -5,10 +5,17 @@ import {Resend} from "resend";
 import {z} from "zod";
 
 const inquirySchema = z.object({
-  name: z.string().min(2),
-  company: z.string().optional(),
+  name: z.string().trim().min(2).max(100),
+  company: z.string().trim().max(160).optional(),
   email: z.string().email(),
-  message: z.string().min(10),
+  phone: z.string().trim().max(100).optional(),
+  country: z.string().trim().max(100).optional(),
+  origin: z.string().trim().min(2).max(160),
+  destination: z.string().trim().min(2).max(160),
+  cargoType: z.string().trim().min(2).max(160),
+  shipmentSize: z.string().trim().max(200).optional(),
+  timing: z.string().trim().max(200).optional(),
+  message: z.string().trim().max(2000).optional(),
   source: z.string().optional(),
   locale: z.string().optional()
 });
@@ -45,6 +52,13 @@ export async function submitInquiry(_: InquiryState, formData: FormData): Promis
 
   if (!isRealDeliveryConfigured()) {
     console.log("[inquiry:mock]", inquiry);
+    if (process.env.NODE_ENV === "production") {
+      console.error("[inquiry:configuration:error] RESEND_API_KEY is not configured");
+      return {
+        success: false,
+        messageKey: "error"
+      };
+    }
     return {
       success: true,
       messageKey: "success"
@@ -92,7 +106,7 @@ async function sendEmailNotification(inquiry: InquiryData) {
   await resend.emails.send({
     from: INQUIRY_FROM,
     to: INQUIRY_TO,
-    subject: `[TopOne Logistics] New freight inquiry - ${inquiry.company || inquiry.name}`,
+    subject: `[TopOne Logistic] New freight inquiry - ${inquiry.company || inquiry.name}`,
     text: formatInquiryText(inquiry)
   });
 }
@@ -132,10 +146,18 @@ function formatInquiryText(inquiry: InquiryData) {
     `Name: ${inquiry.name}`,
     `Company: ${inquiry.company || "Not provided"}`,
     `Email: ${inquiry.email}`,
+    `WhatsApp / phone: ${inquiry.phone || "Not provided"}`,
+    `Country / region: ${inquiry.country || "Not provided"}`,
+    `Origin: ${inquiry.origin}`,
+    `Destination: ${inquiry.destination}`,
+    `Cargo type: ${inquiry.cargoType}`,
+    `Shipment size: ${inquiry.shipmentSize || "Not provided"}`,
+    `Timing: ${inquiry.timing || "Not provided"}`,
     `Source: ${inquiry.source || "website"}`,
     `Locale: ${inquiry.locale || "en"}`,
     `Submitted at: ${inquiry.submittedAt}`,
     "",
-    inquiry.message
+    "Additional notes:",
+    inquiry.message || "Not provided"
   ].join("\n");
 }
