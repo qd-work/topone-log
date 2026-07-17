@@ -1,11 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
-import {motion} from "motion/react";
-import {useEffect, useRef} from "react";
+import {AnimatePresence, motion} from "motion/react";
+import {useEffect, useRef, useState} from "react";
+import {createPortal} from "react-dom";
 import type {Locale} from "@/i18n/routing";
-import {localizedPath} from "@/lib/site";
 
 type HomeHeroProps = {
   locale: Locale;
@@ -16,6 +15,7 @@ const EXPO_OUT: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const VIDEO_URL = "/videos/topone-hero-1080p-v1.mp4";
 const VIDEO_POSTER_URL = "/images/topone-hero-video-poster.jpg";
 const MAP_URL = "/images/topone-route-map.png";
+const WHATSAPP_URL = "https://wa.me/8613705326028";
 
 const routes = [
   "M128.161 74.6764C79.9989 130.001 71.9994 46.0005 20.9815 111.737",
@@ -167,48 +167,125 @@ function RouteMap() {
   );
 }
 
-function ContactButton({href}: {href: string}) {
-  return (
-    <motion.div
-      className="w-full sm:w-auto"
-      initial={{opacity: 0, x: 60}}
-      animate={{opacity: 1, x: 0}}
-      transition={{duration: 0.65, delay: 0.5, ease: EXPO_OUT}}
+function ContactButton({locale}: {locale: Locale}) {
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+  const [compact, setCompact] = useState(false);
+  const [dropDistance, setDropDistance] = useState(640);
+  const contactLabel = locale === "zh" ? "通过 WhatsApp 联系我们" : "Contact us on WhatsApp";
+
+  useEffect(() => {
+    setMounted(true);
+    const updateDropDistance = () => {
+      const bottomGap = window.matchMedia("(min-width: 640px)").matches ? 32 : 20;
+      setDropDistance(Math.max(320, window.innerHeight - bottomGap - 48 - 24));
+    };
+
+    updateDropDistance();
+    window.addEventListener("resize", updateDropDistance);
+    const trigger = triggerRef.current;
+    if (!trigger) return () => window.removeEventListener("resize", updateDropDistance);
+
+    const observer = new IntersectionObserver(([entry]) => {
+      setCompact(!entry.isIntersecting && entry.boundingClientRect.bottom <= 0);
+    });
+
+    observer.observe(trigger);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", updateDropDistance);
+    };
+  }, []);
+
+  const compactButton = (
+    <motion.a
+      href={WHATSAPP_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={contactLabel}
+      aria-hidden={!compact}
+      tabIndex={compact ? 0 : -1}
+      className="fixed bottom-5 right-5 z-[80] grid h-12 w-12 place-items-center rounded-full bg-[#ffda00] shadow-[0_8px_24px_rgba(0,42,53,0.28)] sm:bottom-8 sm:right-8"
+      initial={false}
+      animate={compact ? {opacity: 1, y: 0} : {opacity: 0, y: -dropDistance}}
+      transition={
+        compact
+          ? {
+              y: {type: "spring", stiffness: 112, damping: 18, mass: 0.95},
+              opacity: {duration: 0.28, ease: EXPO_OUT}
+            }
+          : {
+              y: {duration: 0.34, ease: EXPO_OUT},
+              opacity: {duration: 0.14, ease: "easeOut"}
+            }
+      }
+      style={{pointerEvents: compact ? "auto" : "none"}}
       whileHover={{scale: 1.08, y: -2}}
-      whileTap={{scale: 0.97}}
+      whileTap={{scale: 0.9}}
     >
-      <Link
-        href={href}
-        className="group relative block h-14 w-full sm:h-[clamp(48px,min(6vh,4.5vw),68px)] sm:aspect-[434/68] sm:w-auto"
+      <svg aria-hidden="true" viewBox="0 0 16 16" className="h-[23px] w-[23px] fill-[#002a35]">
+        <path d="M13.6 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.93 7.93 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326ZM7.998 14.53h-.003a6.59 6.59 0 0 1-3.357-.919l-.24-.144-2.495.654.666-2.43-.157-.249a6.57 6.57 0 0 1-1.008-3.508c.003-3.63 2.957-6.584 6.593-6.584a6.54 6.54 0 0 1 4.659 1.932 6.54 6.54 0 0 1 1.929 4.66c-.003 3.632-2.957 6.587-6.587 6.587Zm3.615-4.938c-.198-.1-1.17-.578-1.352-.644-.182-.066-.314-.1-.446.1-.132.198-.512.644-.627.776-.116.132-.231.149-.43.05-.198-.1-.837-.309-1.595-.984-.59-.526-.988-1.175-1.103-1.374-.116-.198-.012-.305.087-.404.089-.089.198-.231.297-.347.1-.116.132-.198.198-.33.066-.133.033-.249-.017-.348-.05-.1-.446-1.075-.611-1.47-.161-.387-.324-.334-.446-.34a8.4 8.4 0 0 0-.38-.007.73.73 0 0 0-.529.248c-.182.198-.694.677-.694 1.652s.71 1.917.81 2.05c.099.132 1.398 2.134 3.387 2.992.473.204.842.326 1.13.418.475.151.908.13 1.25.079.381-.057 1.17-.479 1.336-.942.165-.463.165-.86.115-.942-.05-.083-.182-.132-.38-.231Z" />
+      </svg>
+    </motion.a>
+  );
+
+  return (
+    <>
+      <motion.div
+        ref={triggerRef}
+        className="h-14 w-full sm:h-[clamp(48px,min(6vh,4.5vw),68px)] sm:aspect-[434/68] sm:w-auto"
+        initial={{opacity: 0, x: 60}}
+        animate={{opacity: 1, x: 0}}
+        transition={{duration: 0.65, delay: 0.5, ease: EXPO_OUT}}
       >
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 434.001 68"
-          preserveAspectRatio="none"
-          className="absolute inset-0 h-full w-full"
-        >
-          <path
-            fill="#ffda00"
-            d="M316 0C329.08 0 340.435 7.38674 346.121 18.2162C348.618 22.9736 353.086 26.8535 358.459 26.8535H359.252C364.667 26.8535 369.155 22.9169 371.63 18.1007C377.159 7.34039 388.205 0.00015843 400.931 0C419.195 0 434.001 15.1191 434.001 33.7695L433.99 34.6416C433.537 52.8891 418.909 67.5391 400.931 67.5391C387.96 67.5389 376.734 59.9132 371.317 48.8128C368.923 43.9077 364.427 39.873 358.969 39.873C353.492 39.873 348.986 43.9356 346.589 48.8605C341.074 60.1913 329.449 68 316 68H34.001C15.2233 68 0 52.7777 0 34C0 15.2223 15.2233 0 34.001 0H316ZM400.931 2.44141C384.063 2.44163 370.303 16.419 370.303 33.7695C370.303 51.1201 384.063 65.0974 400.931 65.0977C417.798 65.0977 431.56 51.1202 431.56 33.7695C431.56 16.4189 417.798 2.44141 400.931 2.44141Z"
-          />
-        </svg>
-        <span
-          className="absolute inset-y-0 left-0 flex w-[82.7%] items-center justify-center text-[#002a35]"
-          style={{fontSize: "clamp(14px, min(1.6vh, 1.2vw), 20px)"}}
-        >
-          Get in touch
-        </span>
-        <span className="absolute right-[3.6%] top-1/2 flex h-[48%] w-[8%] -translate-y-1/2 items-center justify-center">
-          <svg
-            viewBox="0 0 16.89 20.37"
-            className="h-full w-full -rotate-[135deg] transition-transform duration-[350ms] group-hover:-rotate-90"
-            fill="none"
+        <AnimatePresence initial={false}>
+          {!compact ? (
+          <motion.a
+            key="full-contact"
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={contactLabel}
+            className="group relative block h-full w-full"
+            initial={{opacity: 0, scale: 0.88, x: 24}}
+            animate={{opacity: 1, scale: 1, x: 0}}
+            exit={{opacity: 0, scale: 0.25, x: 80}}
+            transition={{duration: 0.3, ease: EXPO_OUT}}
+            whileHover={{scale: 1.08, y: -2}}
+            whileTap={{scale: 0.97}}
           >
-            <path d="M8.445 19V2M1.5 8.5 8.445 1.5 15.39 8.5" stroke="white" strokeWidth="2.2" />
-          </svg>
-        </span>
-      </Link>
-    </motion.div>
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 434.001 68"
+              preserveAspectRatio="none"
+              className="absolute inset-0 h-full w-full"
+            >
+              <path
+                fill="#ffda00"
+                d="M316 0C329.08 0 340.435 7.38674 346.121 18.2162C348.618 22.9736 353.086 26.8535 358.459 26.8535H359.252C364.667 26.8535 369.155 22.9169 371.63 18.1007C377.159 7.34039 388.205 0.00015843 400.931 0C419.195 0 434.001 15.1191 434.001 33.7695L433.99 34.6416C433.537 52.8891 418.909 67.5391 400.931 67.5391C387.96 67.5389 376.734 59.9132 371.317 48.8128C368.923 43.9077 364.427 39.873 358.969 39.873C353.492 39.873 348.986 43.9356 346.589 48.8605C341.074 60.1913 329.449 68 316 68H34.001C15.2233 68 0 52.7777 0 34C0 15.2223 15.2233 0 34.001 0H316ZM400.931 2.44141C384.063 2.44163 370.303 16.419 370.303 33.7695C370.303 51.1201 384.063 65.0974 400.931 65.0977C417.798 65.0977 431.56 51.1202 431.56 33.7695C431.56 16.4189 417.798 2.44141 400.931 2.44141Z"
+              />
+            </svg>
+            <span
+              className="absolute inset-y-0 left-0 flex w-[82.7%] items-center justify-center text-[#002a35]"
+              style={{fontSize: "clamp(14px, min(1.6vh, 1.2vw), 20px)"}}
+            >
+              Get in touch
+            </span>
+            <span className="absolute right-[3.6%] top-1/2 flex h-[48%] w-[8%] -translate-y-1/2 items-center justify-center">
+              <svg
+                viewBox="0 0 16.89 20.37"
+                className="h-full w-full -rotate-[135deg] transition-transform duration-[350ms] group-hover:-rotate-90"
+                fill="none"
+              >
+                <path d="M8.445 19V2M1.5 8.5 8.445 1.5 15.39 8.5" stroke="white" strokeWidth="2.2" />
+              </svg>
+            </span>
+          </motion.a>
+          ) : null}
+        </AnimatePresence>
+      </motion.div>
+      {mounted ? createPortal(compactButton, document.body) : null}
+    </>
   );
 }
 
@@ -365,7 +442,7 @@ export function HomeHero({locale}: HomeHeroProps) {
                 </div>
               </motion.div>
 
-              <ContactButton href={localizedPath(locale, "/contact")} />
+              <ContactButton locale={locale} />
             </footer>
       </motion.div>
     </section>

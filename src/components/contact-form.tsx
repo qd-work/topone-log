@@ -18,65 +18,33 @@ export function ContactForm({source = "contact-page"}: ContactFormProps) {
   const locale = useLocale();
   const t = useTranslations();
   const [state, formAction] = useActionState(submitInquiry, initialState);
-  const isZh = locale === "zh";
 
   return (
     <form action={formAction} className="grid gap-5">
       <input type="hidden" name="source" value={source} />
       <input type="hidden" name="locale" value={locale} />
 
-      <fieldset className="grid gap-5">
-        <legend className="mb-1 text-xs font-bold uppercase tracking-[0.18em] text-[#6682c2]">
-          {isZh ? "联系人" : "Contact"}
-        </legend>
-        <div className="grid gap-5 md:grid-cols-2">
-          <Field label={t("form.name")} required>
-            <input className={fieldClass} name="name" placeholder={t("form.name")} required autoComplete="name" />
-          </Field>
-          <Field label={t("form.company")}>
-            <input className={fieldClass} name="company" placeholder={t("form.company")} autoComplete="organization" />
-          </Field>
-          <Field label={t("form.email")} required>
-            <input className={fieldClass} name="email" type="email" placeholder={t("form.email")} required autoComplete="email" />
-          </Field>
-          <Field label={t("form.phone")}>
-            <input className={fieldClass} name="phone" placeholder={t("form.phone")} autoComplete="tel" />
-          </Field>
-        </div>
-        <Field label={t("form.country")}>
-          <input className={fieldClass} name="country" placeholder={t("form.country")} autoComplete="country-name" />
+      <div className="grid gap-5 sm:grid-cols-2">
+        <Field label={t("form.name")} required>
+          <input className={fieldClass} name="name" placeholder={t("form.name")} required autoComplete="name" />
         </Field>
-      </fieldset>
+        <Field label={t("form.email")} required>
+          <input className={fieldClass} name="email" type="email" placeholder={t("form.email")} required autoComplete="email" />
+        </Field>
+      </div>
 
-      <fieldset className="grid gap-5 border-t border-[#002a35]/20 pt-5">
-        <legend className="pr-3 text-xs font-bold uppercase tracking-[0.18em] text-[#6682c2]">
-          {isZh ? "货运信息" : "Shipment"}
-        </legend>
-        <div className="grid gap-5 md:grid-cols-2">
-          <Field label={t("form.origin")} required>
-            <input className={fieldClass} name="origin" placeholder={t("form.origin")} required />
-          </Field>
-          <Field label={t("form.destination")} required>
-            <input className={fieldClass} name="destination" placeholder={t("form.destination")} required />
-          </Field>
-          <Field label={t("form.cargoType")} required>
-            <input className={fieldClass} name="cargoType" placeholder={t("form.cargoType")} required />
-          </Field>
-          <Field label={t("form.shipmentSize")}>
-            <input className={fieldClass} name="shipmentSize" placeholder={t("form.shipmentSize")} />
-          </Field>
-        </div>
-        <Field label={t("form.timing")}>
-          <input className={fieldClass} name="timing" placeholder={t("form.timing")} />
-        </Field>
-        <Field label={t("form.message")}>
-          <textarea
-            className="min-h-36 w-full border border-[#002a35]/25 bg-transparent p-4 text-sm text-[#002a35] outline-none transition placeholder:text-[#002a35]/35 focus:border-[#002a35] focus:bg-white"
-            name="message"
-            placeholder={t("form.message")}
-          />
-        </Field>
-      </fieldset>
+      <Field label={t("form.route")} required>
+        <input className={fieldClass} name="route" placeholder={t("form.routePlaceholder")} required />
+      </Field>
+
+      <Field label={t("form.message")} required>
+        <textarea
+          className="min-h-28 w-full resize-y border border-[#002a35]/25 bg-transparent p-4 text-sm text-[#002a35] outline-none transition placeholder:text-[#002a35]/35 focus:border-[#002a35] focus:bg-white"
+          name="message"
+          placeholder={t("form.messagePlaceholder")}
+          required
+        />
+      </Field>
 
       <SubmitButton label={t("form.submit")} pendingLabel={t("common.submitting")} />
       {state.messageKey ? (

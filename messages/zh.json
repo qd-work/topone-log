@@ -23,6 +23,8 @@
     "name": "姓名",
     "company": "公司（选填）",
     "email": "邮箱",
+    "route": "运输路线",
+    "routePlaceholder": "起运地 → 目的地",
     "phone": "WhatsApp / 电话（选填）",
     "country": "国家 / 地区（选填）",
     "origin": "起运港 / 机场",
@@ -30,15 +32,17 @@
     "cargoType": "货物类型",
     "shipmentSize": "柜型、CBM、KG 或尺寸（选填）",
     "timing": "期望出运 / 交付时间（选填）",
-    "message": "其他服务范围或备注（选填）",
-    "submit": "提交询盘",
+    "message": "货物信息",
+    "messagePlaceholder": "货物类型、数量 / 重量，已知时效可一并填写",
+    "submit": "提交报价需求",
     "success": "您的询盘已收到。团队会审核后通过已确认联系方式回复。",
     "error": "询盘提交失败。请检查必填项后重试。",
-    "validation": "请填写姓名、有效邮箱、起运地、目的地和货物类型。"
+    "validation": "请填写姓名、有效邮箱、运输路线和货物信息。"
   },
   "quote": {
     "eyebrow": "询盘",
     "title": "获取货运报价",
+    "text": "只需填写四项，其余信息我们会在回复时确认。",
     "close": "关闭报价表单"
   },
   "footer": {

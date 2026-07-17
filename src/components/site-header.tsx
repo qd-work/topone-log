@@ -6,6 +6,7 @@ import {useLocale} from "next-intl";
 import {AnimatePresence, motion} from "motion/react";
 import {ArrowUpRight, Menu, X} from "lucide-react";
 import {useState} from "react";
+import {QuoteModal} from "@/components/quote-modal";
 import type {Locale} from "@/i18n/routing";
 import {localizedPath} from "@/lib/site";
 
@@ -128,12 +129,7 @@ export function SiteHeader() {
             </motion.div>
           ))}
         </nav>
-        <Link
-          href={localizedPath(locale, "/contact")}
-          className="bg-[#ffda00] px-4 py-2.5 text-xs font-bold uppercase tracking-[0.12em] text-[#002a35] transition hover:bg-white"
-        >
-          {isZh ? "获取报价" : "Get a quote"}
-        </Link>
+        <QuoteModal triggerLabel={isZh ? "获取报价" : "Get a quote"} />
         <Link
           href={languagePath}
           className="pt-2 text-xs font-bold uppercase tracking-[0.12em] text-white/70 hover:text-white"
@@ -182,9 +178,11 @@ export function SiteHeader() {
               </motion.div>
             ))}
             <div className="mt-5 grid grid-cols-[1fr_auto] gap-3">
-              <Link href={localizedPath(locale, "/contact")} onClick={closeMenu} className="bg-[#ffda00] px-5 py-4 text-center text-xs font-bold uppercase tracking-[0.14em] text-[#002a35]">
-                {isZh ? "获取报价" : "Get a quote"}
-              </Link>
+              <QuoteModal
+                triggerLabel={isZh ? "获取报价" : "Get a quote"}
+                onClose={closeMenu}
+                triggerClassName="bg-[#ffda00] px-5 py-4 text-center text-xs font-bold uppercase tracking-[0.14em] text-[#002a35]"
+              />
               <Link href={languagePath} onClick={closeMenu} className="border border-white/40 px-5 py-4 text-xs font-bold text-white">
                 {isZh ? "EN" : "中文"}
               </Link>
