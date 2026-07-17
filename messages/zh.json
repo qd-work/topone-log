@@ -15,7 +15,6 @@
     "viewService": "查看服务",
     "alsoCovering": "亦覆盖",
     "office": "中国青岛",
-    "contactPending": "联系方式即将更新",
     "nvoccPending": "NVOCC 备案信息可按需提供",
     "nvoccBadge": "NVOCC 已备案 · WCA：申请中",
     "submitting": "提交中..."
@@ -152,6 +151,8 @@
     "include4": "所需范围：拖车、报关、保险、派送",
     "detailsTitle": "联系方式",
     "detailsOffice": "办公地：中国青岛",
+    "detailsEmail": "邮箱",
+    "detailsPhone": "电话",
     "responsePending": "报价响应时效待确认。"
   },
   "serviceDetail": {

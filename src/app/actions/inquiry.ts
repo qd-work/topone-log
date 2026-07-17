@@ -1,7 +1,7 @@
 "use server";
 
 import {createHmac} from "crypto";
-import nodemailer from "nodemailer";
+import {Resend} from "resend";
 import {z} from "zod";
 
 const inquirySchema = z.object({
@@ -21,6 +21,11 @@ export type InquiryState = {
   success: boolean;
   messageKey?: "validation" | "success" | "error";
 };
+
+const INQUIRY_TO = "qianhao001@toponelog.com";
+const INQUIRY_FROM = "inquiry@qdworking.com";
+
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 export async function submitInquiry(_: InquiryState, formData: FormData): Promise<InquiryState> {
   const raw = Object.fromEntries(formData.entries());
@@ -46,107 +51,48 @@ export async function submitInquiry(_: InquiryState, formData: FormData): Promis
     };
   }
 
-  const [feishuResult, emailResult, botResult] = await Promise.allSettled([
-    writeToFeishuBitable(inquiry),
-    sendEmailNotification(inquiry),
-    sendFeishuBotNotification(inquiry)
-  ]);
-
-  if (feishuResult.status === "rejected") {
-    console.error("[inquiry:feishu:error]", feishuResult.reason);
+  try {
+    // await（不 void）——避免 Vercel function return 后截断 webhook
+    await sendLeadNotifications(inquiry);
+    return {
+      success: true,
+      messageKey: "success"
+    };
+  } catch (error) {
+    console.error("[inquiry:error]", error);
     return {
       success: false,
       messageKey: "error"
     };
   }
+}
+
+function isRealDeliveryConfigured() {
+  return Boolean(process.env.RESEND_API_KEY);
+}
+
+async function sendLeadNotifications(inquiry: InquiryData) {
+  const [emailResult, botResult] = await Promise.allSettled([
+    sendEmailNotification(inquiry),
+    sendFeishuBotNotification(inquiry)
+  ]);
 
   if (emailResult.status === "rejected") {
     console.error("[inquiry:email:error]", emailResult.reason);
+    throw emailResult.reason;
   }
   if (botResult.status === "rejected") {
     console.error("[inquiry:bot:error]", botResult.reason);
   }
-
-  return {
-    success: true,
-    messageKey: "success"
-  };
-}
-
-function isRealDeliveryConfigured() {
-  return Boolean(
-    process.env.FEISHU_APP_ID &&
-      process.env.FEISHU_APP_SECRET &&
-      process.env.FEISHU_APP_TOKEN &&
-      process.env.FEISHU_TABLE_ID &&
-      process.env.FEISHU_BOT_WEBHOOK_URL &&
-      process.env.SMTP_HOST &&
-      process.env.SMTP_PORT &&
-      process.env.SMTP_USER &&
-      process.env.SMTP_PASS &&
-      process.env.NOTIFY_EMAIL
-  );
-}
-
-async function writeToFeishuBitable(inquiry: InquiryData) {
-  const tokenResponse = await fetch("https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal", {
-    method: "POST",
-    headers: {"content-type": "application/json"},
-    body: JSON.stringify({
-      app_id: process.env.FEISHU_APP_ID,
-      app_secret: process.env.FEISHU_APP_SECRET
-    })
-  });
-  const tokenJson = (await tokenResponse.json()) as {tenant_access_token?: string; code?: number; msg?: string};
-
-  if (!tokenResponse.ok || !tokenJson.tenant_access_token) {
-    throw new Error(`Feishu token failed: ${tokenJson.msg || tokenResponse.statusText}`);
-  }
-
-  const recordResponse = await fetch(
-    `https://open.feishu.cn/open-apis/bitable/v1/apps/${process.env.FEISHU_APP_TOKEN}/tables/${process.env.FEISHU_TABLE_ID}/records`,
-    {
-      method: "POST",
-      headers: {
-        authorization: `Bearer ${tokenJson.tenant_access_token}`,
-        "content-type": "application/json"
-      },
-      body: JSON.stringify({
-        fields: {
-          Name: inquiry.name,
-          Company: inquiry.company || "",
-          Email: inquiry.email,
-          Notes: inquiry.message,
-          Source: inquiry.source || "website",
-          Status: "New",
-          "Submitted at": inquiry.submittedAt
-        }
-      })
-    }
-  );
-
-  const recordJson = (await recordResponse.json()) as {code?: number; msg?: string};
-  if (!recordResponse.ok || recordJson.code !== 0) {
-    throw new Error(`Feishu record failed: ${recordJson.msg || recordResponse.statusText}`);
-  }
 }
 
 async function sendEmailNotification(inquiry: InquiryData) {
-  const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT || 465),
-    secure: Number(process.env.SMTP_PORT || 465) === 465,
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS
-    }
-  });
+  if (!resend) return;
 
-  await transporter.sendMail({
-    from: process.env.SMTP_USER,
-    to: process.env.NOTIFY_EMAIL,
-    cc: process.env.NOTIFY_EMAIL_CC || undefined,
-    subject: `New freight inquiry from ${inquiry.company || inquiry.name}`,
+  await resend.emails.send({
+    from: INQUIRY_FROM,
+    to: INQUIRY_TO,
+    subject: `[TopOne Logistics] New freight inquiry - ${inquiry.company || inquiry.name}`,
     text: formatInquiryText(inquiry)
   });
 }
@@ -171,8 +117,9 @@ async function sendFeishuBotNotification(inquiry: InquiryData) {
     })
   });
 
-  if (!response.ok) {
-    throw new Error(`Feishu bot failed: ${response.statusText}`);
+  const result = (await response.json().catch(() => null)) as {code?: number; msg?: string} | null;
+  if (!response.ok || (result && typeof result.code === "number" && result.code !== 0)) {
+    throw new Error(`Feishu bot failed: ${result?.msg || response.statusText}`);
   }
 }
 
@@ -186,6 +133,7 @@ function formatInquiryText(inquiry: InquiryData) {
     `Company: ${inquiry.company || "Not provided"}`,
     `Email: ${inquiry.email}`,
     `Source: ${inquiry.source || "website"}`,
+    `Locale: ${inquiry.locale || "en"}`,
     `Submitted at: ${inquiry.submittedAt}`,
     "",
     inquiry.message

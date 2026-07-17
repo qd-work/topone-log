@@ -8,10 +8,19 @@ export function organizationJsonLd() {
     legalName: siteConfig.legalName,
     alternateName: siteConfig.chineseName,
     url: siteConfig.siteUrl,
+    email: siteConfig.email,
+    telephone: siteConfig.phoneHref.replace("tel:", ""),
     address: {
       "@type": "PostalAddress",
       addressLocality: "Qingdao",
       addressCountry: "CN"
+    },
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "sales",
+      email: siteConfig.email,
+      telephone: siteConfig.phoneHref.replace("tel:", ""),
+      availableLanguage: ["English", "Chinese"]
     }
   };
 }

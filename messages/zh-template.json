@@ -15,7 +15,6 @@
     "viewService": "View service",
     "alsoCovering": "Also covering",
     "office": "Qingdao, China",
-    "contactPending": "Contact details coming soon",
     "nvoccPending": "NVOCC registration details available on request",
     "nvoccBadge": "NVOCC registered · WCA: joining",
     "submitting": "Submitting..."
@@ -88,7 +87,7 @@
     "heroTitle": "A China-origin partner built for forwarders",
     "heroText": "TopOne Logistics presents confirmed credentials carefully and keeps founder, membership, and operating details as confirmation items until supporting material is supplied.",
     "companyEyebrow": "Company",
-    "companyTitle": "TopOne Logistics, Qianhao International Logistics Co., Ltd.",
+    "companyTitle": "TopOne Logistics, QINGDAO QIANHAO INTERNATIONAL LOGISTICS CO.,LTD",
     "companyText": "Founded in 2025 in Qingdao, the company is positioned as a China-origin forwarding partner for overseas freight forwarders.",
     "founderTitle": "Founder-led: 18 years in freight forwarding",
     "founderText": "TopOne Logistics is founded by a freight forwarding veteran with 18 years of industry experience. After nearly two decades moving international cargo across global trade lanes, the founder established TopOne to be the reliable China-origin partner that overseas forwarders actually want to work with.",
@@ -159,6 +158,8 @@
     "include4": "Required scope: trucking, customs, insurance, delivery",
     "detailsTitle": "Contact details",
     "detailsOffice": "Office: Qingdao, China",
+    "detailsEmail": "Email",
+    "detailsPhone": "Phone",
     "responsePending": "Quote response commitment to be confirmed."
   },
   "serviceDetail": {

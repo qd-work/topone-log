@@ -61,8 +61,18 @@ export default async function ContactPage({params}: {params: Promise<{locale: st
                 <h2 className="font-heading text-2xl font-bold text-slate-900">{t("detailsTitle")}</h2>
                 <div className="mt-5 grid gap-3 text-sm leading-7 text-slate-600">
                   <p>{t("detailsOffice")}</p>
-                  <p>{tc("contactPending")}</p>
-                  <p>{tc("contactPending")}</p>
+                  <p>
+                    {t("detailsEmail")}:{" "}
+                    <a className="font-medium text-amber-700 hover:underline" href={`mailto:${siteConfig.email}`}>
+                      {siteConfig.email}
+                    </a>
+                  </p>
+                  <p>
+                    {t("detailsPhone")}:{" "}
+                    <a className="font-medium text-amber-700 hover:underline" href={siteConfig.phoneHref}>
+                      {siteConfig.phoneDisplay}
+                    </a>
+                  </p>
                   <p>{t("responsePending")}</p>
                 </div>
               </div>
