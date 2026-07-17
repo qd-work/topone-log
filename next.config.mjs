@@ -9,17 +9,9 @@ const nextConfig = {
   // All metadata is local, so the blocking cost is negligible for this small site.
   htmlLimitedBots: /.*/,
   images: {
-    formats: ["image/avif", "image/webp"],
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com"
-      },
-      {
-        protocol: "https",
-        hostname: "images.pexels.com"
-      }
-    ]
+    // Every image ships with the project and is served directly from /public.
+    // This avoids runtime image proxy dependencies in restricted networks.
+    unoptimized: true
   },
   async headers() {
     return [

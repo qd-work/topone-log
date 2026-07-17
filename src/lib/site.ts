@@ -13,7 +13,7 @@ export const siteConfig = {
   office: "Qingdao, China",
   images: {
     logo: "/icon.svg",
-    social: "/images/topone-port-hero.png",
+    social: "/images/topone-port-hero.jpg",
     hero: siteImages.hero,
     warehouse: siteImages.warehouse,
     yard: siteImages.yard,
