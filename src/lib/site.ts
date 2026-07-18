@@ -2,11 +2,11 @@ import type {Locale} from "@/i18n/routing";
 import {siteImages} from "@/lib/site-images";
 
 export const siteConfig = {
-  name: "TopOne Logistic",
+  name: "QianHao Logistics",
   legalName: "QINGDAO QIANHAO INTERNATIONAL LOGISTICS CO.,LTD",
   chineseName: "青岛千灏国际物流有限公司",
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://www.toponelog.com",
-  email: "qianhao001@toponelog.com",
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://www.qianhaologistics.com",
+  email: "info@qianhaologistics.com",
   phone: "13705326028",
   phoneDisplay: "+86 137 0532 6028",
   phoneHref: "tel:+8613705326028",

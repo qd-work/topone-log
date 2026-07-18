@@ -22,7 +22,7 @@ export type InquiryState = {
   messageKey?: "validation" | "success" | "error";
 };
 
-const INQUIRY_TO = "qianhao001@toponelog.com";
+const INQUIRY_TO = "info@qianhaologistics.com";
 const INQUIRY_FROM = "inquiry@qdworking.com";
 
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
@@ -99,7 +99,7 @@ async function sendEmailNotification(inquiry: InquiryData) {
   await resend.emails.send({
     from: INQUIRY_FROM,
     to: INQUIRY_TO,
-    subject: `[TopOne Logistic] New freight inquiry - ${inquiry.name}`,
+    subject: `[QianHao Logistics] New freight inquiry - ${inquiry.name}`,
     text: formatInquiryText(inquiry)
   });
 }

@@ -51,8 +51,8 @@
     "contact": "联系"
   },
   "home": {
-    "metaTitle": "中国国际货运代理 | TopOne Logistic",
-    "metaDescription": "TopOne Logistic 为海外货代伙伴提供中国起运的海运、空运、陆运与多式联运服务，具备 NVOCC 备案。",
+    "metaTitle": "中国国际货运代理 | QianHao Logistics",
+    "metaDescription": "QianHao Logistics 为海外货代伙伴提供中国起运的海运、空运、陆运与多式联运服务，具备 NVOCC 备案。",
     "heroBadge": "NVOCC 备案 · 中国起运港伙伴",
     "heroTitle": "您可靠的中国货代",
     "heroTitleAccent": "伙伴。",
@@ -69,7 +69,7 @@
     "servicesTitle": "中国起运端到端物流方案",
     "routesEyebrow": "核心航线",
     "routesTitle": "连接中国与全球",
-    "whyEyebrow": "为何选择 TopOne",
+    "whyEyebrow": "为何选择 QianHao",
     "whyTitle": "先建立信任，再谈合作。",
     "whyText": "对海外货代而言，可靠的中国起运支持来自清晰范围、经验管理，以及订舱前逐票确认的操作信息。",
     "why1": "具备 NVOCC 备案的中国起运货代支持。",
@@ -85,16 +85,16 @@
     "step5": "交付"
   },
   "about": {
-    "metaTitle": "关于 TopOne Logistic | 中国国际货运代理",
-    "metaDescription": "了解位于青岛的 TopOne Logistic：具备 NVOCC 备案，为海外货代伙伴提供中国起运货运支持。",
+    "metaTitle": "关于 QianHao Logistics | 中国国际货运代理",
+    "metaDescription": "了解位于青岛的 QianHao Logistics：具备 NVOCC 备案，为海外货代伙伴提供中国起运货运支持。",
     "heroEyebrow": "关于",
     "heroTitle": "为货代同行打造的中国起运港伙伴",
     "heroText": "立足青岛的中国起运端伙伴，以经验管理、标准化协同和逐票透明确认为海外货代提供支持。",
     "companyEyebrow": "公司",
-    "companyTitle": "TopOne Logistic，青岛千灏国际物流有限公司",
+    "companyTitle": "QianHao Logistics，青岛千灏国际物流有限公司",
     "companyText": "2025 年成立于青岛，定位为面向海外货代的中国起运港合作伙伴。",
     "founderTitle": "创始人领衔：18 年货代经验",
-    "founderText": "TopOne 由一位拥有 18 年国际货代经验的行业老兵创立。近二十年来深耕全球贸易航线后，他创立 TopOne，成为海外货代真正愿意合作的中国端伙伴。",
+    "founderText": "QianHao Logistics 由一位拥有 18 年国际货代经验的行业老兵创立。近二十年来深耕全球贸易航线后，他创立 QianHao，成为海外货代真正愿意合作的中国端伙伴。",
     "founderPhoto": "年国际货代经验",
     "capabilityEyebrow": "能力",
     "capabilityTitle": "经验管理，受控执行。",
@@ -113,7 +113,7 @@
     "qualificationsText": "NVOCC 备案信息可按需提供；其他会员资质仅在完成核验后展示。"
   },
   "services": {
-    "metaTitle": "中国起运货代服务 | TopOne Logistic",
+    "metaTitle": "中国起运货代服务 | QianHao Logistics",
     "metaDescription": "面向海外货代伙伴的中国起运整柜、拼箱、空运、陆运、报关、单证与多式联运协调服务。",
     "heroEyebrow": "服务",
     "heroTitle": "中国起运货代服务",
@@ -133,7 +133,7 @@
     "scope5": "单证"
   },
   "routes": {
-    "metaTitle": "中国起运货运航线 | TopOne Logistic",
+    "metaTitle": "中国起运货运航线 | QianHao Logistics",
     "metaDescription": "查看中国至非洲、南美、东南亚、欧洲、美洲与澳新的货运覆盖，航程、船期与承运方案按票确认。",
     "heroEyebrow": "航线",
     "heroTitle": "面向海外货代的中国起运航线",
@@ -147,8 +147,8 @@
     "transitSchedule": "航程 / 船期"
   },
   "contact": {
-    "metaTitle": "获取中国货运报价 | TopOne Logistic",
-    "metaDescription": "向 TopOne Logistic 提交中国起运货运询盘，提供起运地、目的地、货型、货量与时效，以便审核报价。",
+    "metaTitle": "获取中国货运报价 | QianHao Logistics",
+    "metaDescription": "向 QianHao Logistics 提交中国起运货运询盘，提供起运地、目的地、货型、货量与时效，以便审核报价。",
     "heroEyebrow": "联系",
     "heroTitle": "获取货运报价",
     "heroText": "留下货运需求，我们会跟进中国起运港报价。",

@@ -57,7 +57,7 @@ export function SiteHeader() {
       href: localizedPath(locale, "/about"),
       description: isZh ? "了解团队、流程与已验证资质" : "Meet the team, process, and verified credentials",
       children: [
-        [isZh ? "公司简介" : "About TopOne", "/about"],
+        [isZh ? "公司简介" : "About QianHao", "/about"],
         [isZh ? "运营能力" : "Operating model", "/about#capabilities"],
         [isZh ? "资质信息" : "Qualifications", "/about#qualifications"],
         [isZh ? "联系我们" : "Contact", "/contact"]
@@ -89,8 +89,8 @@ export function SiteHeader() {
           }}
           onClick={closeMenu}
         >
-          <span className="block text-white">TOPONE</span>
-          <span className="block text-[#ffda00]">LOGISTIC</span>
+          <span className="block text-white">QIANHAO</span>
+          <span className="block text-[#ffda00]">LOGISTICS</span>
         </Link>
       </motion.div>
 

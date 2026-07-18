@@ -42,7 +42,7 @@ export function createPageMetadata({
           url: socialImage,
           width: 1718,
           height: 916,
-          alt: "Container port operations for TopOne Logistic"
+          alt: "Container port operations for QianHao Logistics"
         }
       ],
       locale: locale === "zh" ? "zh_CN" : "en_US",

@@ -41,7 +41,7 @@ export function websiteJsonLd() {
     "@type": "WebSite",
     "@id": new URL("/#website", siteConfig.siteUrl).toString(),
     name: siteConfig.name,
-    alternateName: "TopOne",
+    alternateName: "QianHao",
     url: siteConfig.siteUrl,
     publisher: {"@id": new URL("/#organization", siteConfig.siteUrl).toString()},
     inLanguage: ["en", "zh-CN"]

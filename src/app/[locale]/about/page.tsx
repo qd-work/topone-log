@@ -114,7 +114,7 @@ export default async function AboutPage({params}: {params: Promise<{locale: stri
             >
               <Image
                 src={siteConfig.images.warehouse}
-                alt="Warehouse operations at TopOne Logistic for China-origin freight"
+                alt="Warehouse operations at QianHao Logistics for China-origin freight"
                 width={800}
                 height={600}
                 className="h-56 w-full object-cover opacity-84"

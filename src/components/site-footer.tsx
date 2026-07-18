@@ -17,7 +17,7 @@ export async function SiteFooter({locale}: SiteFooterProps) {
         <div className="grid gap-14 border-b border-white/20 pb-16 lg:grid-cols-[1.4fr_0.6fr_1fr]">
           <div>
             <Link href={localizedPath(locale, "/")} className="cargo-display inline-block text-[clamp(64px,9vw,140px)] leading-[0.72]">
-              TOPONE<br /><span className="text-[#ffda00]">LOGISTIC</span>
+              QIANHAO<br /><span className="text-[#ffda00]">LOGISTICS</span>
             </Link>
             <p className="mt-8 max-w-md text-sm leading-relaxed text-white/55">{t("intro")}</p>
           </div>
@@ -46,7 +46,7 @@ export async function SiteFooter({locale}: SiteFooterProps) {
           </div>
         </div>
         <div className="flex flex-col gap-3 pt-6 text-xs text-white/70 md:flex-row md:justify-between">
-          <p>© {new Date().getFullYear()} TOPONE LOGISTIC. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} QIANHAO LOGISTICS. All rights reserved.</p>
           <p>{siteConfig.legalName}</p>
           <p>{tc("representativeFooter")}</p>
         </div>

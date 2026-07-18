@@ -85,7 +85,7 @@ function RouteMap() {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={MAP_URL}
-        alt="TopOne Logistic global transport routes"
+        alt="QianHao Logistics global transport routes"
         fetchPriority="high"
         className="absolute inset-0 h-full w-full object-contain"
       />
@@ -359,7 +359,7 @@ export function HomeHero({locale}: HomeHeroProps) {
                   lineHeight: 0.78
                 }}
               >
-                <span className="sr-only">TopOne Logistic — China freight forwarder. </span>
+                <span className="sr-only">QianHao Logistics — China freight forwarder. </span>
                 <motion.span
                   className="block whitespace-nowrap text-white"
                   initial={{x: -900}}
